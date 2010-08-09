@@ -4,4 +4,6 @@ They are intended to sync all important files to some local directory. It should
 
 NOTE: It does not backup the AppStore-apps nor the iTunes library. It is also not guaranteed that the backup contains all system settings and other stuff. It is intended to be used in addition to the iTunes methods for backing-up / updating the iPhone.
 
+NOTE: The files it backups are not intended to be synced just back to a new system. For example, the dpkg database states which packages are currently installed -- so these data are wrong on a new system and this will confuse dpkg (apt-get / Cydia).
+
 - Albert Zeyer, albert.zeyer@rwth-aachen.de, www.az2000.de
