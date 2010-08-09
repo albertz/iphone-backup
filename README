@@ -2,4 +2,6 @@ These are some scripts to backup an iPhone / iPod Touch / iPad. (I will refer on
 
 They are intended to sync all important files to some local directory. It should be possible to recover an iPhone from a base install from this backup.
 
+NOTE: It does not backup the AppStore-apps nor the iTunes library. It is also not guaranteed that the backup contains all system settings and other stuff. It is intended to be used in addition to the iTunes methods for backing-up / updating the iPhone.
+
 - Albert Zeyer, albert.zeyer@rwth-aachen.de, www.az2000.de
