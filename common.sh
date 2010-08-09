@@ -18,12 +18,12 @@ function isync() {
 	srcdir="$1"
 	destdir="$2"
 
-	eval ${(z)RSYNCCMD} --exclude private_key \
-		root@$HOST:\"\\\"$srcdir\\\"\" \"$destdir\"
+	${(Q)${(z)RSYNCCMD}} --exclude private_key \
+		root@$HOST:"\"$srcdir\"" "$destdir"
 }
 
 function issh() {
-	${(z)SSHCMD} ${argv}
+	${(Q)${(z)SSHCMD}} ${argv}
 }
 
 function ils() {
