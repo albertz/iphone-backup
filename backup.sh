@@ -23,24 +23,32 @@ issh " \
 	for d in *; do \
 		[ \! -d \"\$d\" ] && continue; \
 		grep com.apple. \"\$d/Info.plist\" >/dev/null 2>/dev/null && continue; \
-		dpkg -S \"\$d\" >/dev/null && continue; \
+		dpkg -S \"\$d\" >/dev/null 2>/dev/null && continue; \
 		echo \"\$d\"; \
 	done; \
 	" | \
-{ while read a; do iapps+=($a); done }
+{ while read a; do iapps+=($a); done } || exit 1
 iapps=(/Applications/$^iapps[@])
 echo " ."
 
 echo -n "* reading /var/mobile"
-homedirs=(${(f)"$(ils /var/mobile)"}) # * in ~
+homedirs=(${(f)"$(ils /var/mobile)"}) || exit 1 # * in ~
 homedirs=("${(@)homedirs:#Applications}") # remove the App dir
 homedirs=(/var/mobile/$^homedirs[@])
 echo " ."
 
 echo -n "* reading /etc"
-etcdirs=(${(f)"$(ils /etc/)"})
+etcdirs=(${(f)"$(ils /etc/)"}) || exit 1
 etcdirs=(/etc/$^etcdirs[@])
 echo " ."
 
-dirs=($iapps $homedirs $etcdirs)
-echo $dirs
+dirs=($iapps $homedirs $etcdirs /var/lib /var/preferences)
+
+for d in $dirs; do
+	echo "* syncing $d ..."
+	dest="${backupdir}/$(dirname $d)"
+	mkdir -p $dest
+	isync $d $dest || exit 1
+done
+
+echo "*** done"
