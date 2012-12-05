@@ -50,7 +50,7 @@ etcdirs=(${(f)"$(ils /etc/)"}) || exit 1
 etcdirs=(/etc/$^etcdirs[@])
 echo " ."
 
-dirs=($iapps $homedirs $mediadirs $etcdirs /var/lib /var/preferences)
+dirs=($iapps $homedirs $mediadirs $etcdirs /var/lib /var/preferences /.trackme)
 
 echo "dirs:"
 echo $dirs
@@ -59,7 +59,10 @@ for d in $dirs; do
 	echo "* syncing $d ..."
 	dest="${backupdir}/$(dirname $d)"
 	mkdir -p $dest
-	isync $d $dest || exit 1
+	# sometimes I get bad-file-descriptors errors, e.g.:
+	# /var/mobile/Library/Mobile Documents/com~apple~mail/Data/MailData/Signatures/ubiquitous_AllSignatures.plist: Bad file descriptor
+	# but might not be important, so ignore and continue
+	isync $d $dest
 done
 
 echo "*** done"
