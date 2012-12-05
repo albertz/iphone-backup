@@ -3,6 +3,8 @@ cd "$(dirname "$0")"
 mydir="$(pwd)"
 cd "$olddir"
 
+[ -e ~/Documents/iphone-access-info.sh ] && source ~/Documents/iphone-access-info.sh
+
 [ "$SSHRELAYDIR" = "" ] && SSHRELAYDIR="${mydir}/../iphone-ssh-relay"
 if [ "$HOST" != "" ]; then # small shortcut
 	[ "$RSYNCCMD" = "" ] && [ "$PORT" != "" ] && RSYNCCMD="rsync -avP -e \"ssh -p $PORT\""
@@ -23,7 +25,7 @@ function isync() {
 }
 
 function issh() {
-	${(Q)${(z)SSHCMD}} ${argv}
+	${(Q)${(z)SSHCMD}} "\"${argv}\""
 }
 
 function ils() {

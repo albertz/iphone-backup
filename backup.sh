@@ -52,6 +52,9 @@ echo " ."
 
 dirs=($iapps $homedirs $mediadirs $etcdirs /var/lib /var/preferences)
 
+echo "dirs:"
+echo $dirs
+
 for d in $dirs; do
 	echo "* syncing $d ..."
 	dest="${backupdir}/$(dirname $d)"
