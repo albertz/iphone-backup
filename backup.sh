@@ -52,6 +52,12 @@ echo " ."
 
 dirs=($iapps $homedirs $mediadirs $etcdirs /var/lib /var/preferences /.trackme)
 
+# remove some
+# DCIM, i.e. Pictures/Videos should maybe be handled separately. At least I do that.
+dirs=("${(@)dirs:#/var/mobile/Media/DCIM}")
+# Purchases might be huge and is anyway covered by the Apple system.
+dirs=("${(@)dirs:#/var/mobile/Media/Purchases}")
+
 echo "dirs:"
 echo $dirs
 
